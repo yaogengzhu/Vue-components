@@ -19,17 +19,14 @@
 
     <template id="tpl">
         <div>
-            评论人：<input type="text" v-model='name'>
+            评论人：<input type="text" v-model='name' >
             评论内容：<input type="text" v-model='comment' @keyUp.enter='post'>
             <input type="button" value="提交" @click='post'>
         </div>
     </template>
 
     <script>
-        //创建一个组件
-
-
-
+ 
         var vm = new Vue({
             el: '#app',
             data: {

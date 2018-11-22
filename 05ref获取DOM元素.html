@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../04/lib/vue-2.4.0.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <button @click='test'>测试</button>
+        <!-- 只需要在给元素添加一个属性---ref    -->
+        <h1 ref='myh1'>hello wordl</h1>
+        <com ref='myh2'></com>
+    </div>
+
+    <script>
+
+        // 也可以获取子组件
+        var com  = {
+            template:'<h2>hello world</h2>'
+        }
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{
+                test(){
+                    // 获取dom元素中的内容
+                    console.log(vm.$refs.myh1.innerText);
+
+                    // 获取子组件
+                    console.log(vm.$refs.myh2)
+                }
+            },
+            components:{
+                com
+            }
+        })
+    </script>
+</body>
+</html>
