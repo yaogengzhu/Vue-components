@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../04/lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <com1 v-bind:parentsmsg='msg'></com1>
+    </div>
+
+
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello'
+            },
+            components: {
+
+                com1: {
+                    data: function () {
+                        return {
+                            data: 'hello world '
+                        }
+                    },
+                    template: '<h1 @click="change">hello {{ parentsmsg }}  {{ data }}</h1>',
+                    props: ['parentsmsg'],
+                    methods: {
+                        change() {
+                            // this.data = '您好！';
+                            // data中的数据可以改变
+                            // this.parentsmsg = 'hhl';
+                            // 父组件传来的数据只可以读取
+                        }
+                    }
+                }
+
+            }
+
+        })
+    </script>
+</body>
+
+</html>
