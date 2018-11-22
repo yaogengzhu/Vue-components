@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../04/lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <com1 @add='loadComments'></com1>
+        <ul>
+            <li v-for='item in list' :key='item.id'>评论人：{{ item.name }}==========评论内容:{{ item.comment }}</li>
+        </ul>
+    </div>
+
+    <template id="tpl">
+        <div>
+            评论人：<input type="text" v-model='name'>
+            评论内容：<input type="text" v-model='comment' @keyUp.enter='post'>
+            <input type="button" value="提交" @click='post'>
+        </div>
+    </template>
+
+    <script>
+        //创建一个组件
+
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                        id: Date.now(),
+                        name: '小白',
+                        comment: '我是小小白哈哈！'
+                    },
+                    {
+                        id: Date.now(),
+                        name: '小黑',
+                        comment: '我是小小黑哈哈！'
+                    },
+                    {
+                        id: Date.now(),
+                        name: '小猪',
+                        comment: '我是小小猪哈哈！'
+                    },
+                ]
+            },
+            methods: {
+                // 定义一个方法获取本地的数据
+                loadComments() {
+                    var list = JSON.parse(localStorage.getItem('cmts') || '[]');
+                    // 
+                    if (list.length != 0) {
+                        this.list = list;
+                    }
+
+                    // 需要调用这个方法才可以更新数据
+                }
+
+            },
+            beforeCreate() {
+
+            },
+            created() {
+                this.loadComments();
+            },
+            components: {
+                com1: {
+                    template: '#tpl',
+                    data: function () {
+                        return {
+                            name: '',
+                            comment: '',
+
+                        }
+                    },
+                    methods: {
+                        post() {
+                            var obj = {
+                                name: this.name,
+                                comment: this.comment
+                            };
+                            // 从localstroage 中获取数据
+                            var list = JSON.parse(localStorage.getItem('cmts') || '[]')
+                            list.unshift(obj);
+                            // 保存文件到localStroage中
+                            localStorage.setItem('cmts', JSON.stringify(list));
+
+                            this.$emit('add');
+
+                            // 清空输入框中的内容
+                            this.name = this.comment = '';
+
+
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
+
+
+<!-- 需要子组件中调用父组件的方法 -->
