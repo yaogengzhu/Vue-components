@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../04/lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <com1 @func='add'></com1>
+    </div>
+
+    <template id="tpl">
+        <div>
+            <h1 @click='click'>hello </h1>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * 1.父组件向子组件传递一个方法 ==== 通过子组件中自己的方中 this.$emit('方法名')调用  
+         * 2.通过上这个方法。子组件可以向父组件传递数据 ==== 参数方式 ---
+         * 
+        */
+
+
+
+        var com1 = {
+            template: '#tpl',
+            data:function (){
+                return {
+                    msg :[
+                        {'name':'zs','age':16}
+                    ]
+                }
+            },
+            methods: {
+                click() {
+                    // console.log('子组件的方法');
+                    this.$emit('func',this.msg);
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                sonData:null
+            },
+            methods: {
+                // 传入一个参数，方便子组件的数据传递过来。 这个方法可以被子组件去调用触发 ===
+                add(data) {
+                    // console.log('hello');
+                    // 将父组件中的方法传递过来 //传递一个参数====
+                    console.log(data)
+                    this.sonData = data;
+                }
+            },
+            // 子组件
+            components: {
+                com1
+            }
+        })
+    </script>
+</body>
+
+</html>
