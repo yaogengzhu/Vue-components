@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <!-- 引入路由文件 -->
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 这里的链接---前面必要要加一个#  来说明是hash路由方式-否则会当成一个真的路径去请求 -->
+        <a href="#/login">登录</a>    
+        <a href="#/register">注册</a>
+
+        <!-- router-view 是由vue-router提供的元素，专门用来当做占位符-。路由匹配到的组件，就会展示到router-view中 -->
+        <router-view></router-view>
+    </div>
+
+    <script>
+        var login = {
+            template: '<h1>登录</h1>'
+        };
+
+        var register = {
+            template: '<h1>注册</h1>'
+        };
+
+        // 创建路由
+        var routerObj = new VueRouter({
+            routes: [{
+                    path: '/login',
+                    component: login  // component属性必须是模板对象--不能是模板对象的名字---
+                },
+                {
+                    path: '/register',
+                    component: register
+                }
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            // router  将vueRouter 和vm 实例联系在一起---
+            router: routerObj
+        })
+    </script>
+
+</body>
+
+</html>
